@@ -4,7 +4,7 @@ import express from "express";
 
 import connectDB from "./config/connectDb";
 import { errorHandler } from "./middlewares";
-import { PhotoRoutes } from "./routes";
+import { AdminRoutes, PhotoRoutes } from "./routes";
 import { CustomError } from "./utils";
 
 const app = express();
@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/admin", AdminRoutes);
 app.use("/api/photos", PhotoRoutes);
 
 app.all("*", (req, _res, next): void => {
