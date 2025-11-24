@@ -7,13 +7,8 @@ import cors from "cors";
 import express from "express";
 
 import connectDB from "./config/connectDb";
-import { errorHandler } from "./middlewares";
-import { AdminRoutes, BookingRoutes, PhotoRoutes } from "./routes";
-import { CustomError } from "./utils";
 
 const app = express();
-
-// const allowedOrigins = ["http://localhost:5173", "https://andriyst92.github.io"];
 
 // Middleware
 app.use(cors());
@@ -21,21 +16,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/admin", AdminRoutes);
-app.use("/api/photos", PhotoRoutes);
-app.use("/api/bookings", BookingRoutes);
-
 // Define your routes
 app.get("/", (req, res) => {
   res.json({ message: "Hello from Express on Vercel!" });
 });
-
-app.all("*", (req, _res, next): void => {
-  const error = new CustomError(`Route ${req.originalUrl} not found`, 404);
-  next(error);
-});
-
-app.use(errorHandler);
 
 // Database connection
 connectDB();
