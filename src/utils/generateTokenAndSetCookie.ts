@@ -9,7 +9,7 @@ const generateTokenAndSetCookie = ({ userId, res }: { userId: string; res: Respo
   res.cookie("auth_token", token, {
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15d
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "none",
     secure: process.env.NODE_ENV !== "development",
   });
 };
