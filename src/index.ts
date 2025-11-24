@@ -13,7 +13,11 @@ import { CustomError } from "./utils";
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173", "https://andriyst92.github.io"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://andriyst92.github.io",
+  "https://test-vercel-six-beryl-85.vercel.app",
+];
 
 app.use(
   cors({
@@ -24,7 +28,9 @@ app.use(
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        // For development, you might want to log this instead of throwing error
+        console.warn(`CORS blocked for origin: ${origin}`);
+        callback(null, false); // Return false instead of error
       }
     },
     credentials: true,
