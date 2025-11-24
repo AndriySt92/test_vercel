@@ -9,10 +9,15 @@ import { CustomError } from "./utils";
 
 const app = express();
 
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? [process.env.FRONTEND_URL as string]
+    : ["http://localhost:5173"];
+
 // Middleware
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: allowedOrigins,
     credentials: true,
   }),
 );
