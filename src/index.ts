@@ -13,15 +13,10 @@ import { CustomError } from "./utils";
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173", process.env.FRONTEND_URL as string];
+// const allowedOrigins = ["http://localhost:5173", "https://andriyst92.github.io"];
 
 // Middleware
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  }),
-);
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
