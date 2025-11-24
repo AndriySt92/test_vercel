@@ -13,10 +13,7 @@ import { CustomError } from "./utils";
 
 const app = express();
 
-const allowedOrigins =
-  process.env.NODE_ENV === "production"
-    ? [process.env.FRONTEND_URL as string]
-    : ["http://localhost:5173"];
+const allowedOrigins = ["http://localhost:5173", process.env.FRONTEND_URL as string];
 
 // Middleware
 app.use(
@@ -32,6 +29,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/admin", AdminRoutes);
 app.use("/api/photos", PhotoRoutes);
 app.use("/api/bookings", BookingRoutes);
+
+// Define your routes
+app.get("/", (req, res) => {
+  res.json({ message: "Hello from Express on Vercel!" });
+});
 
 app.all("*", (req, _res, next): void => {
   const error = new CustomError(`Route ${req.originalUrl} not found`, 404);
