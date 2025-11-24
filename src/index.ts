@@ -19,21 +19,30 @@ const allowedOrigins = [
   "https://test-vercel-six-beryl-85.vercel.app",
 ];
 
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       // Allow requests with no origin (like mobile apps or Postman)
+//       if (!origin) return callback(null, true);
+
+//       if (allowedOrigins.indexOf(origin) !== -1) {
+//         callback(null, true);
+//       } else {
+//         // For development, you might want to log this instead of throwing error
+//         console.warn(`CORS blocked for origin: ${origin}`);
+//         callback(null, false); // Return false instead of error
+//       }
+//     },
+//     credentials: true,
+//   }),
+// );
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or Postman)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        // For development, you might want to log this instead of throwing error
-        console.warn(`CORS blocked for origin: ${origin}`);
-        callback(null, false); // Return false instead of error
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   }),
 );
 app.use(express.json());
