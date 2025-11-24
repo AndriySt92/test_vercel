@@ -11,6 +11,6 @@
       "noImplicitAny": false,
       "typeRoots": ["./src/types"]
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "src/index.ts"],
     "exclude": ["node_modules"]
   }
