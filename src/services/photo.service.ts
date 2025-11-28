@@ -1,12 +1,16 @@
 import cloudinary from "../config/cloudinary";
+import { PhotoUploadDto } from "../dto";
 import Photos from "../models/photo.model";
-import { CustomError, uploadImage } from "../utils";
+import { CustomError } from "../utils";
 
-const addPhoto = async (categories: string[], photoFiles: Express.Multer.File[]) => {
+const addPhoto = async (categories: string[], photos: PhotoUploadDto[]) => {
   await Promise.all(
-    photoFiles.map(async (photoFile) => {
-      const photoUrl = await uploadImage(photoFile);
-      await Photos.create({ categories, photoUrl });
+    photos.map(async (photo: { url: string; publicId: string }) => {
+      await Photos.create({
+        categories,
+        photoUrl: photo.url,
+        publicId: photo.publicId,
+      });
     }),
   );
 };

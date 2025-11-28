@@ -8,6 +8,7 @@ const photoSchema = new mongoose.Schema(
   {
     categories: [{ type: String, enum: photoCategoryValues, required: true }],
     photoUrl: { type: String, required: true },
+    publicId: { type: String, required: true },
   },
   { timestamps: true },
 );
