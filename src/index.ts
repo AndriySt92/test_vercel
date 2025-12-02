@@ -14,7 +14,35 @@ import { CustomError } from "./utils";
 
 const app = express();
 
-app.use(cors(getCorsOptions()));
+const allowedOrigins = JSON.parse(process.env.ALLOWED_ORIGINS as string);
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.warn(`CORS blocked for origin: ${origin}`);
+        callback(null, false);
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With",
+      "X-App-Version",
+      "X-Platform",
+      "X-Device-ID",
+      "Accept",
+      "Accept-Language",
+    ],
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
