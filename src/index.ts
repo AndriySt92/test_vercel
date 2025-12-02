@@ -40,11 +40,7 @@ const app = express();
 //   };
 // };
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://andriyst92.github.io",
-  "https://test-vercel-six-beryl-85.vercel.app",
-];
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? JSON.parse(process.env.ALLOWED_ORIGINS) : [];
 
 app.use(
   cors({
