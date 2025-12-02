@@ -7,36 +7,14 @@ import cors from "cors";
 import express from "express";
 
 import connectDB from "./config/connectDb";
+import getCorsOptions from "./config/cors";
 import { errorHandler } from "./middlewares";
 import { AdminRoutes, BookingRoutes, PhotoRoutes } from "./routes";
 import { CustomError } from "./utils";
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://andriyst92.github.io",
-  "https://test-vercel-six-beryl-85.vercel.app",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.warn(`CORS blocked for origin: ${origin}`);
-        callback(null, false);
-      }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "X-App-Version"],
-  }),
-);
+app.use(cors(getCorsOptions()));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
