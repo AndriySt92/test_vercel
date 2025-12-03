@@ -30,8 +30,9 @@ const getCorsOptions = (): CorsOptions => {
       "X-Platform",
       "X-Device-ID",
       "Accept",
-      "Accept-Language",
     ],
+    maxAge: 86400, // 24 hours
+    exposedHeaders: ["Set-Cookie", "Date", "ETag"], // for safari
   };
 };
 
